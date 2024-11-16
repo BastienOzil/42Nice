@@ -1,0 +1,2 @@
+ls -p --ignore=".*" --format=comma --sort=time
+
