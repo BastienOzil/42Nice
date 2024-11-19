@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bozil <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 11:08:19 by bozil             #+#    #+#             */
-/*   Updated: 2024/11/19 11:56:59 by bozil            ###   ########.fr       */
+/*   Created: 2024/11/14 14:43:10 by bozil             #+#    #+#             */
+/*   Updated: 2024/11/19 11:53:27 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_printf(const char *, ...)
+void	ft_putstr(char *s, int fd)
 {
-   va_list args;
-    va_start(args, count);
-    
-    
-    va_end(args);
-    return ();
+	if (!s)
+		return ;
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
 }
