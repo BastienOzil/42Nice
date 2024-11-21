@@ -4,11 +4,11 @@ CC = cc
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_printf.c  ft_putchar_fd.c  ft_putnbr_fd.c  ft_putstr_fd.c \
+SRCS = ft_printf.c  ft_putchar.c  ft_putnbr.c  ft_putstr.c ft_puthex.c \
 
 OBJS = $(SRCS:.c=.o)
 
-HEADER = libft.h
+HEADER = libftprintf.h
 
 all: $(NAME)
 

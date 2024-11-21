@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bozil <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 14:43:10 by bozil             #+#    #+#             */
-/*   Updated: 2024/11/19 11:53:27 by bozil            ###   ########.fr       */
+/*   Updated: 2024/11/21 11:16:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-void	ft_putstr(char *s, int fd)
+void ft_putstr(char *str)
 {
-	if (!s)
-		return ;
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
+    if (str == NULL)
+    {
+        write(1, "(null)", 6);
+        return;
+    }
+
+    while (*str)
+    {
+        write(1, str, 1);
+        str++;
+    }
 }
