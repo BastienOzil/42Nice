@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 14:43:10 by bozil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:28:35 by bozil            ###   ########.fr       */
+/*   Created: 2024/11/21 11:23:57 by marvin            #+#    #+#             */
+/*   Updated: 2024/11/22 14:42:30 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-void	ft_putstr(char *str)
-{
-	int	c;
+# include <unistd.h>
+# include <stdarg.h>
 
-	if (str == NULL)
-	{
-		write(1, "(null)", 6);
-		return ;
-	}
-	while (*str)
-	{
-		write(1, str, 1);
-		str++;
-	}
-}
+int			ft_printf(const char *format, ...);
+void		ft_putstr(char *str);
+void		ft_putchar(char c);
+void		ft_putnbr(int n);
+void		ft_puthex(unsigned long n, int uppercase);
+void		ft_putnbr_unsigned(unsigned int n);
+
+#endif

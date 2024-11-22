@@ -8,7 +8,7 @@ SRCS = ft_printf.c  ft_putchar.c  ft_putnbr.c  ft_putstr.c ft_puthex.c \
 
 OBJS = $(SRCS:.c=.o)
 
-HEADER = libftprintf.h
+HEADER = ft_printf.h
 
 all: $(NAME)
 
