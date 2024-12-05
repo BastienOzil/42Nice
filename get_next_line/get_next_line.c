@@ -3,94 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozil.b <ozil.b@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:07:20 by bozil             #+#    #+#             */
-/*   Updated: 2024/12/03 16:35:39 by bozil            ###   ########.fr       */
+/*   Updated: 2024/12/05 11:08:37 by ozil.b           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*read_line(int fd, char *res)
-{
-	ssize_t	bytes;
-	char	buffer[BUFFER_SIZE + 1];
-	char	*tmp;
-
-	bytes = 1;
-	while (bytes > 0 && !ft_strchr(res, '\n'))
-	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
-			return (NULL);
-		buffer[bytes] = '\0';
-		tmp = ft_strjoin(res, buffer);
-		if (!tmp)
-			return (NULL);
-		free(res);
-		res = tmp;
-	}
-    return (res); 
-}
-
+/* Extract the line from the static buffer */
 static char	*extract_line(char **res)
 {
 	char	*line;
-	char	*after;
+	char	*newline;
+	char	*temp;
 
-	after = ft_strchr(*res, '\n');
-	if (after)
+	if (!*res)
+		return (NULL);
+	newline = ft_strchr(*res, '\n');
+	if (!newline)
 	{
-		*after = '\0';
-		*res = ft_strdup(after + 1);
-		if (!res)
-			return (NULL);
+		line = *res;
+		*res = NULL;
+		return (line);
 	}
-	line = ft_strdup(*res);
+	line = ft_substr(*res, 0, newline - *res + 1);
+	temp = ft_substr(*res, newline - *res + 1, 
+		ft_strlen(newline + 1));
 	free(*res);
-	*res = (NULL);
+	*res = temp;
 	return (line);
 }
-#include <stdio.h>
+/* Read from file descriptor and update buffer */
+static char	*read_buffer(int fd, char *res)
+{
+	char	*buffer;
+	int		read_bytes;
+
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	while (1)
+	{
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (read_bytes <= 0)
+		{
+			free(buffer);
+			return (res);
+		}
+		buffer[read_bytes] = '\0';
+		res = ft_strjoin(res, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	free(buffer);
+	return (res);
+}
 
 char	*get_next_line(int fd)
 {
-	static char	*res;
+	static char	*res = NULL;
 	char		*line;
 
-	res = (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	write(1,"b\n",2);
-	
-	res = read_line(fd, res);
+	res = read_buffer(fd, res);
 	if (!res)
 		return (NULL);
 	line = extract_line(&res);
 	return (line);
 }
-/*
- #include <fcntl.h>
-int	main(void)
-{
-	int fd;
-	char *line;
-	write(1,"start\n",6);
-
-	fd = open("test.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	int i = 0;
-	while (++i < 10)
-	{
-		write(1,"a\n",2);
-		line = get_next_line(fd);
-		printf("line: '%s'", line);
-		if (line == NULL || line[0]== '\0')
-			break ;
-		free(line);
-	}
-	close(fd);
-	return (0);
-} */

@@ -3,87 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ozil.b <ozil.b@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:07:24 by bozil             #+#    #+#             */
-/*   Updated: 2024/12/03 16:07:02 by bozil            ###   ########.fr       */
+/*   Updated: 2024/12/05 11:12:03 by ozil.b           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/* String join with memory management */
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+
+	if (!s1)
+		return (ft_substr(s2, 0, ft_strlen(s2)));
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	result = malloc(len1 + len2 + 1);
+	if (!result)
+		return (NULL);
+	i = -1;
+	while (++i < len1)
+		result[i] = s1[i];
+	i = -1;
+	while (++i < len2)
+		result[len1 + i] = s2[i];
+	result[len1 + len2] = '\0';
+	free(s1);
+	return (result);
+}
+/* Find first occurrence of character */
 char	*ft_strchr(const char *s, int c)
 {
-	int i;
+	char	*str;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	while (s[i] != '\0')
+	str = (char *)s;
+	while (*str)
 	{
-		if (s[i] == (char)c)
-			return ((char *)s);
-		i++;
+		if (*str == (char)c)
+			return (str);
+		str++;
 	}
-	if (c == '\0')
-		return ((char *)s);
 	return (NULL);
 }
-
-char	*ft_strjoin(const char *s1, const char *s2)
+/* Calculate string length */
+size_t	ft_strlen(const char *s)
 {
-	char	*joined_str;
-	size_t	i;
-	size_t	j;
+	size_t	len;
 
-	i = 0;
-	if (!s1)
-		return (ft_strdup(""));
-	joined_str = malloc(ft_strlen(s1) + (ft_strlen(s2)) + 1);
-	if (!joined_str)
-		return (NULL);
-	while (s1[i] != '\0')
-	{
-		joined_str[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		joined_str[i + j] = s2[j];
-		j++;
-	}
-	joined_str[i + j] = '\0';
-	return (joined_str);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }
-
-char	*ft_strdup(const char *s)
+/* Substring extraction */
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*dup;
+	char	*substr;
+	size_t	s_len;
 	size_t	i;
 
-
-	dup = malloc(ft_strlen(s) + 1);
-	if (!dup)
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (ft_substr("", 0, 0));
+	if (len > s_len - start)
+		len = s_len - start;
+	substr = malloc(len + 1);
+	if (!substr)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (i < len)
 	{
-		dup[i] = s[i];
+		substr[i] = s[start + i];
 		i++;
 	}
-	dup[i] = '\0';
-	return (dup);
-}
-
-char	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (i);
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	substr[i] = '\0';
+	return (substr);
 }
