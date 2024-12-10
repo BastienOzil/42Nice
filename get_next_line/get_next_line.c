@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozil.b <ozil.b@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:07:20 by bozil             #+#    #+#             */
-/*   Updated: 2024/12/05 11:08:37 by ozil.b           ###   ########.fr       */
+/*   Updated: 2024/12/09 11:27:38 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static char	*extract_line(char **res)
 		return (line);
 	}
 	line = ft_substr(*res, 0, newline - *res + 1);
-	temp = ft_substr(*res, newline - *res + 1, 
-		ft_strlen(newline + 1));
+	temp = ft_substr(*res, newline - *res + 1, ft_strlen(newline + 1));
 	free(*res);
 	*res = temp;
 	return (line);
 }
+
 /* Read from file descriptor and update buffer */
 static char	*read_buffer(int fd, char *res)
 {
@@ -44,13 +44,15 @@ static char	*read_buffer(int fd, char *res)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (1)
+	read_bytes = 1;
+	while (read_bytes > 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes <= 0)
+		if (read_bytes < 0)
 		{
 			free(buffer);
-			return (res);
+			free(res);
+			return (NULL);
 		}
 		buffer[read_bytes] = '\0';
 		res = ft_strjoin(res, buffer);
@@ -69,8 +71,31 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	res = read_buffer(fd, res);
-	if (!res)
+	if (!res || res[0] == '\0')
 		return (NULL);
 	line = extract_line(&res);
 	return (line);
 }
+/*
+#include <fcntl.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open("test.txt", O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Erreur d'ouverture du fichier");
+		return (1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Ligne lue : %s\n", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}*/

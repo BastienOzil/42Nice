@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozil.b <ozil.b@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:07:24 by bozil             #+#    #+#             */
-/*   Updated: 2024/12/05 11:12:03 by ozil.b           ###   ########.fr       */
+/*   Updated: 2024/12/09 11:11:36 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	free(s1);
 	return (result);
 }
+
 /* Find first occurrence of character */
 char	*ft_strchr(const char *s, int c)
 {
@@ -51,16 +52,20 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
 /* Calculate string length */
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
 
 	len = 0;
+	if (!s)
+		return (0);
 	while (s[len])
 		len++;
 	return (len);
 }
+
 /* Substring extraction */
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -72,7 +77,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
-		return (ft_substr("", 0, 0));
+		return (NULL);
 	if (len > s_len - start)
 		len = s_len - start;
 	substr = malloc(len + 1);
