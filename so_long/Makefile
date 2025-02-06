@@ -2,39 +2,42 @@ NAME = so_long
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-MLXFLAGS = -L./includes/minilibx-linux -lmlx -lbsd -lXext -lX11 -lm
+MLX_DIR = minilibx
 
-INCLUDES = -I./includes/minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
 
-SRCS = test.c
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+
+SRCS = so_long.c parse_map.c load_elements.c key_press.c check_map.c
 
 OBJS = $(SRCS:.c=.o)
 
-#BONUS =
+INCLUDE = -Iincludes -I$(MLX_DIR)OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
-#BOBJS = $(BONUS:.c=.o)
+HEADER = so_long.h
 
 all: $(NAME)
 
+$(OBJS)/%.o: $(SRCS) | $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS) $(INCLUDES)
+$(OBJS):
+	mkdir -p $(OBJS)
 
-.c.o:
-	@$(CC) $(FLAGS) -c -o $@ $< $(INCLUDES)
+$(NAME): $(OBJS) $(MLX_LIB)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
 
-bonus: $(OBJS) $(BOBJS)
-	ar rcs $(NAME) $(OBJS) $(BOBJS)
-	ranlib $(NAME)
+$(MLX_LIB):
+	make -C $(MLX_DIR)
 
 clean:
-	rm -f $(OBJS) $(BOBJS)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   check_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 12:50:30 by bozil             #+#    #+#             */
-/*   Updated: 2025/02/05 10:44:56 by bozil            ###   ########.fr       */
+/*   Created: 2025/02/05 10:26:32 by bozil             #+#    #+#             */
+/*   Updated: 2025/02/05 10:33:11 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void exit_game(t_game *game)
-{
-    int i;
-    
-    if (game->map)
-    {
-        i = 0;
-        while (i < game->height)
-        {
-            free(game->map[i]);
-            i++;
-        }
-        free(game->map);
-    }
-    if (game->mlx && game->win)
-        mlx_destroy_window(game->mlx, game->win);
-    free(game);
-    exit(0);
-}
 
 static int check_walls(t_game *game)
 {
@@ -72,12 +52,7 @@ static int check_elements(t_game *game)
         x = 0;
         while (x < game->width)
         {
-            if (game->map[y][x] == 'P')
-            {
-                player++;
-                game->player_x = x;
-                game->player_y = y;
-            }
+            if (game->map[y][x] == 'P') player++;
             else if (game->map[y][x] == 'E') exit++;
             else if (game->map[y][x] == 'C') collectibles++;
             x++;
