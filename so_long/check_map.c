@@ -6,7 +6,7 @@
 /*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:50:30 by bozil             #+#    #+#             */
-/*   Updated: 2025/02/05 10:44:56 by bozil            ###   ########.fr       */
+/*   Updated: 2025/02/07 12:02:44 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ static int check_elements(t_game *game)
 
 int check_map(t_game *game)
 {
+        
     game->width = ft_strlen(game->map[0]);
-    if (!check_walls(game) || !check_elements(game) || !check_path(game))
+    if (!check_walls(game) || !check_elements(game))
     {
         ft_printf("Error\nNo valid path exists between player, collectibles, and exit.\n");
         exit_game(game);

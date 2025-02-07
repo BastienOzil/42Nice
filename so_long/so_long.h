@@ -6,7 +6,7 @@
 /*   By: bozil <bozil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 13:43:22 by bozil             #+#    #+#             */
-/*   Updated: 2025/02/06 08:56:28 by bozil            ###   ########.fr       */
+/*   Updated: 2025/02/07 11:36:27 by bozil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <mlx.h>
+# include "libft/libft.h"
+# include "minilibx-linux/mlx.h"
 
 typedef struct s_elements
 {
@@ -48,8 +49,12 @@ typedef struct s_game
 
 
 
-int     parse_map(char *filename, t_game *game);
+int     parse_map(char *mapdata, t_game *game);
+int     check_map(t_game *game);
 void    start_game(t_game *game);
+void    load_elements(t_game *game);
+void    render_map(t_game *game);
+void    exit_game(t_game *game);
 void    free_map(t_game *game);
 
 #endif
