@@ -25,6 +25,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+/*Bonus:*/
 int		ft_lstsize(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
@@ -34,6 +35,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
+/* Must be done:*/
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isdigit(char c);
@@ -68,5 +70,10 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *str, char c);
+/*More*/
+char	*get_next_line(int fd);
+int		ft_printf(const char *format, ...);
+int		ft_puthex(unsigned long n, int uppercase);
+int		ft_putptr(void *ptr);
 
 #endif

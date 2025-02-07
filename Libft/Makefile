@@ -12,13 +12,14 @@ SRCS =	ft_atoi.c ft_memchr.c ft_split.c ft_strncmp.c \
 	ft_isascii.c ft_putchar_fd.c ft_strlcat.c ft_tolower.c \
 	ft_isdigit.c ft_putendl_fd.c ft_strlcpy.c ft_toupper.c \
 	ft_isprint.c ft_putnbr_fd.c ft_strlen.c \
-	ft_itoa.c ft_putstr_fd.c ft_strmapi.c
+	ft_itoa.c ft_putstr_fd.c ft_strmapi.c \
+	get_next_line.c ft_printf.c ft_putptr.c ft_puthex.c
 
 OBJS = $(SRCS:.c=.o)
 
-BONUS = ft_lstsize.c ft_lstnew.c ft_lstadd_front.c ft_lstlast.c \
-	ft_lstiter.c ft_lstmap.c \
-	ft_lstadd_back.c ft_lstclear.c ft_lstdelone.c
+BONUS = ft_lstsize_bonus.c ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstlast_bonus.c \
+	ft_lstiter_bonus.c ft_lstmap_bonus.c \
+	ft_lstadd_back_bonus.c ft_lstclear_bonus.c ft_lstdelone_bonus.c
 
 BOBJS = $(BONUS:.c=.o)
 
@@ -27,14 +28,14 @@ HEADER = libft.h
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	ar -rcs $(NAME) $(OBJS)
 	ranlib $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(OBJS) $(BOBJS)
-	ar rcs $(NAME) $(OBJS) $(BOBJS)
+	ar -rcs $(NAME) $(OBJS) $(BOBJS)
 	ranlib $(NAME)
 
 clean:
